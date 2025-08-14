@@ -1,0 +1,26 @@
+twog_project/
+└── backend/
+    ├── src/
+    │   ├── config/
+    │   │   └── db.js
+    │   ├── middleware/
+    │   │   └── errorHandler.js
+    │   ├── controllers/
+    │   │   ├── productController.js
+    │   │   ├── categoryController.js
+    │   │   └── supplierController.js
+    │   ├── models/
+    │   │   ├── productModel.js
+    │   │   ├── categoryModel.js
+    │   │   └── supplierModel.js
+    │   ├── routes/
+    │   │   ├── productRoutes.js
+    │   │   ├── categoryRoutes.js
+    │   │   ├── supplierRoutes.js
+    │   │   └── index.js
+    │   ├── utils/
+    │   │   └── logger.js
+    │   └── app.js
+    ├── .env
+    ├── package.json
+    └── server.js
