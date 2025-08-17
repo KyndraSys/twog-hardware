@@ -1,47 +1,49 @@
 const supplierModel = require('../models/supplierModel');
 
 module.exports = {
-  getSuppliers: async (req, res) => {
+  getSuppliers: async (req, res, next) => {
     try {
       const suppliers = await supplierModel.getAllSuppliers();
       res.json(suppliers);
     } catch (err) {
-      res.status(500).json({ error: err.message });
+      next(err);
     }
   },
-  getSupplier: async (req, res) => {
+  getSupplier: async (req, res, next) => {
     try {
       const supplier = await supplierModel.getSupplierById(req.params.id);
       if (!supplier) return res.status(404).json({ error: 'Supplier not found' });
       res.json(supplier);
     } catch (err) {
-      res.status(500).json({ error: err.message });
+      next(err);
     }
   },
-  addSupplier: async (req, res) => {
+  addSupplier: async (req, res, next) => {
     try {
-      const newSupplier = await supplierModel.addSupplier(req.body);
+      const { name, contact_person, phone, email, address } = req.body;
+      const newSupplier = await supplierModel.addSupplier({ name, contact_person, phone, email, address });
       res.status(201).json(newSupplier);
     } catch (err) {
-      res.status(500).json({ error: err.message });
+      next(err);
     }
   },
-  updateSupplier: async (req, res) => {
+  updateSupplier: async (req, res, next) => {
     try {
-      const updatedSupplier = await supplierModel.updateSupplier(req.params.id, req.body);
+      const { name, contact_person, phone, email, address } = req.body;
+      const updatedSupplier = await supplierModel.updateSupplier(req.params.id, { name, contact_person, phone, email, address });
       if (!updatedSupplier) return res.status(404).json({ error: 'Supplier not found' });
       res.json(updatedSupplier);
     } catch (err) {
-      res.status(500).json({ error: err.message });
+      next(err);
     }
   },
-  deleteSupplier: async (req, res) => {
+  deleteSupplier: async (req, res, next) => {
     try {
       const deletedSupplier = await supplierModel.deleteSupplier(req.params.id);
       if (!deletedSupplier) return res.status(404).json({ error: 'Supplier not found' });
       res.json({ message: 'Supplier deleted' });
     } catch (err) {
-      res.status(500).json({ error: err.message });
+      next(err);
     }
   },
 };

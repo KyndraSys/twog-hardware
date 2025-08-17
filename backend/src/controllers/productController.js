@@ -20,7 +20,8 @@ module.exports = {
   },
   addProduct: async (req, res, next) => {
     try {
-      const newProduct = await productModel.addProduct(req.body);
+      const { code, name, category_id, supplier_id, size_specification, unit_price, quantity_in_stock, reorder_level } = req.body;
+      const newProduct = await productModel.addProduct({ code, name, category_id, supplier_id, size_specification, unit_price, quantity_in_stock, reorder_level });
       res.status(201).json(newProduct);
     } catch (err) {
       next(err);
@@ -28,7 +29,8 @@ module.exports = {
   },
   updateProduct: async (req, res, next) => {
     try {
-      const updatedProduct = await productModel.updateProduct(req.params.id, req.body);
+      const { code, name, category_id, supplier_id, size_specification, unit_price, quantity_in_stock, reorder_level } = req.body;
+      const updatedProduct = await productModel.updateProduct(req.params.id, { code, name, category_id, supplier_id, size_specification, unit_price, quantity_in_stock, reorder_level });
       if (!updatedProduct) return res.status(404).json({ error: 'Product not found' });
       res.json(updatedProduct);
     } catch (err) {

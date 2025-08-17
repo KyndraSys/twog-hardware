@@ -11,9 +11,10 @@ module.exports = {
   },
   addCategory: async (category) => {
     const { name, description } = category;
+    if (!name) throw new Error('Category name is required.');
     const result = await db.query(
       'INSERT INTO categories (category_name, description) VALUES ($1, $2) RETURNING *',
-      [name, description]
+      [name, description || null]
     );
     return result.rows[0];
   },
@@ -21,7 +22,7 @@ module.exports = {
     const { name, description } = category;
     const result = await db.query(
       'UPDATE categories SET category_name = $1, description = $2 WHERE category_id = $3 RETURNING *',
-      [name, description, id]
+      [name, description || null, id]
     );
     return result.rows[0];
   },
