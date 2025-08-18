@@ -5,6 +5,28 @@ import axios from 'axios';
 
 const API_BASE = 'http://localhost:5000/api';
 
+const InputField = ({ label, name, type = "text", placeholder, children, value, onChange, readOnly }) => (
+  <div className="space-y-2">
+    <label className="text-sm font-semibold text-gray-700 flex items-center gap-1">
+      {label}
+      <span className="text-red-500">*</span>
+    </label>
+    <div className="relative">
+      {children || (
+        <input
+          type={type}
+          name={name}
+          value={value || ''}
+          onChange={onChange}
+          readOnly={readOnly}
+          className="w-full px-4 py-3 border-2 rounded-xl transition-all duration-200 focus:ring-4 focus:ring-blue-100 focus:border-blue-500 focus:outline-none border-gray-200 bg-gray-50 focus:bg-white"
+          placeholder={placeholder}
+        />
+      )}
+    </div>
+  </div>
+);
+
 function EditProduct() {
   const { id } = useParams();
   const [productData, setProductData] = useState({
@@ -102,55 +124,32 @@ function EditProduct() {
     window.history.back();
   };
 
-  const InputField = ({ label, name, type = "text", placeholder, children, className = "" }) => (
-    <div className="space-y-2">
-      <label className="text-sm font-semibold text-gray-700 flex items-center gap-1">
-        {label}
-        <span className="text-red-500">*</span>
-      </label>
-      <div className="relative">
-        {children || (
-          <input
-            type={type}
-            name={name}
-            value={productData[name]}
-            onChange={handleChange}
-            className={`
-              w-full px-4 py-3 border-2 rounded-xl transition-all duration-200
-              focus:ring-4 focus:ring-blue-100 focus:border-blue-500 focus:outline-none
-              ${error ? 'border-red-300 bg-red-50' : 'border-gray-200 bg-gray-50 focus:bg-white'}
-            `}
-            placeholder={placeholder}
-          />
-        )}
-        {error && name === 'submit' && (
-          <div className="flex items-center gap-1 mt-1 text-red-600 text-xs animate-pulse">
-            <AlertCircle className="h-3 w-3" />
-            <span>{error}</span>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-6 rounded shadow w-full max-w-md">
+      <div className="bg-white p-6 rounded shadow w-full max-w-4xl">
         <h2 className="text-xl font-semibold text-gray-800 mb-4">Edit Product</h2>
         {error && <p className="text-red-600 mb-4">{error}</p>}
-        <div className="space-y-4">
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <InputField
             label="Product Code"
             name="product_code"
             placeholder="Product Code"
+            value={productData.product_code}
+            onChange={handleChange}
             readOnly
           />
           <InputField
             label="Product Name"
             name="product_name"
             placeholder="Product Name"
+            value={productData.product_name}
+            onChange={handleChange}
             required
           />
+          
           <div>
             <label className="text-sm font-semibold text-gray-700 flex items-center gap-1">
               Category <span className="text-red-500">*</span>
@@ -167,6 +166,7 @@ function EditProduct() {
               ))}
             </select>
           </div>
+          
           <div>
             <label className="text-sm font-semibold text-gray-700 flex items-center gap-1">
               Supplier <span className="text-red-500">*</span>
@@ -183,20 +183,7 @@ function EditProduct() {
               ))}
             </select>
           </div>
-          <InputField
-            label="Current Stock"
-            name="quantity_in_stock"
-            type="number"
-            min="0"
-            placeholder="Current Stock"
-          />
-          <InputField
-            label="Minimum Stock Level"
-            name="reorder_level"
-            type="number"
-            min="0"
-            placeholder="Minimum Stock Level"
-          />
+          
           <InputField
             label="Unit Price (KES)"
             name="unit_price"
@@ -204,24 +191,49 @@ function EditProduct() {
             step="0.01"
             min="0"
             placeholder="Unit Price"
+            value={productData.unit_price}
+            onChange={handleChange}
             required
           />
-          <div className="flex justify-end space-x-4 mt-4">
-            <button
-              onClick={handleCancel}
-              className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300"
-              disabled={loading}
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handleSave}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-              disabled={loading}
-            >
-              {loading ? 'Saving...' : 'Save Changes'}
-            </button>
-          </div>
+          
+          <InputField
+            label="Current Stock"
+            name="quantity_in_stock"
+            type="number"
+            min="0"
+            placeholder="Current Stock"
+            value={productData.quantity_in_stock}
+            onChange={handleChange}
+          />
+        </div>
+        
+        <div className="mt-4">
+          <InputField
+            label="Minimum Stock Level"
+            name="reorder_level"
+            type="number"
+            min="0"
+            placeholder="Minimum Stock Level"
+            value={productData.reorder_level}
+            onChange={handleChange}
+          />
+        </div>
+        
+        <div className="flex justify-end space-x-4 mt-6">
+          <button
+            onClick={handleCancel}
+            className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300"
+            disabled={loading}
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleSave}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            disabled={loading}
+          >
+            {loading ? 'Saving...' : 'Save Changes'}
+          </button>
         </div>
       </div>
     </div>

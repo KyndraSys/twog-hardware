@@ -8,15 +8,21 @@ twog_project/
     │   ├── controllers/
     │   │   ├── productController.js
     │   │   ├── categoryController.js
-    │   │   └── supplierController.js
+    │   │   ├── supplierController.js
+    │   │   ├── saleController.js    # New
+    │   │  
     │   ├── models/
     │   │   ├── productModel.js
     │   │   ├── categoryModel.js
-    │   │   └── supplierModel.js
+    │   │   ├── supplierModel.js
+    │   │   ├── saleModel.js         # New
+    │   │   
     │   ├── routes/
     │   │   ├── productRoutes.js
     │   │   ├── categoryRoutes.js
     │   │   ├── supplierRoutes.js
+    │   │   ├── saleRoutes.js        # New
+    │   │   ├
     │   │   └── index.js
     │   ├── utils/
     │   │   └── logger.js

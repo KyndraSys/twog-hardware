@@ -1,4 +1,3 @@
-// src/utils/api.js
 import axios from 'axios';
 
 const api = axios.create({
@@ -58,6 +57,18 @@ export const fetchCategories = async () => {
   } catch (error) {
     console.error('Error fetching categories:', error);
     throw new Error('Failed to load categories');
+  }
+};
+
+export const fetchSales = async (startDate = '', endDate = '') => {
+  try {
+    const response = await api.get('/sales', {
+      params: { startDate, endDate }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching sales:', error);
+    throw new Error('Failed to load sales');
   }
 };
 
