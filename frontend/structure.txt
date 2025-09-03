@@ -1,0 +1,32 @@
+twog-hardware-frontend/
+├── public/
+│   ├── vite.svg
+│   └── index.html
+├── src/
+│   ├── components/
+│   │   ├── Sidebar.jsx
+│   │   ├── Dashboard.jsx
+│   │   ├── Inventory.jsx
+│   │   ├── PointOfSale.jsx
+│   │   ├── SalesHistory.jsx
+│   │   ├── Reports.jsx
+│   │   ├── Settings.jsx
+│   │   ├── AddProduct.jsx
+│   │   └── SaleReceipt.jsx
+│   ├── App.jsx
+│   ├── main.jsx
+│   ├── index.css
+│   └── utils/
+│       ├── api.js
+│       └── constants.js
+├── .gitignore
+├── index.html
+├── package.json
+├── README.md
+├── vite.config.js
+├── tailwind.config.js
+└── postcss.config.js
+
+
+
+
