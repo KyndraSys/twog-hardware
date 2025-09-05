@@ -12,7 +12,7 @@ module.exports = {
   getCategory: async (req, res, next) => {
     try {
       const category = await categoryModel.getCategoryById(req.params.id);
-      if (!category) return res.status(404).json({ error: 'Category not found' });
+    if (!category) return res.status(404).json({ error: 'Category not found' });
       res.json(category);
     } catch (err) {
       next(err);
@@ -20,7 +20,8 @@ module.exports = {
   },
   addCategory: async (req, res, next) => {
     try {
-      const newCategory = await categoryModel.addCategory(req.body);
+      const { name, description } = req.body;
+      const newCategory = await categoryModel.addCategory({ name, description });
       res.status(201).json(newCategory);
     } catch (err) {
       next(err);
@@ -28,7 +29,8 @@ module.exports = {
   },
   updateCategory: async (req, res, next) => {
     try {
-      const updatedCategory = await categoryModel.updateCategory(req.params.id, req.body);
+      const { name, description } = req.body;
+      const updatedCategory = await categoryModel.updateCategory(req.params.id, { name, description });
       if (!updatedCategory) return res.status(404).json({ error: 'Category not found' });
       res.json(updatedCategory);
     } catch (err) {
